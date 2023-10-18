@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Atestados - WEB</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <meta charset="utf-8" />
+</head>
+<body>
+
+<fieldset>
+  <legend><h1>Listagem de Atestados</h1></legend>
+<div class="container">
+    
+    <table>
+    <thead>
+
+      <% if(results.length === 0) { %>
+        <tr>
+          <td colspan="4">Nenhum cliente cadastrado.</td>
+        </tr>
+      <% } else { %>  
+        <p>Alunos já cadastrados no sistema.</p>
+        <tr class="dados">
+          <td style="width:5%">Matrícula</td>
+          <td style="width:10%">Nome</td>
+          <td style="width:5%">Turma</td>
+          <td style="width:5%">Data entrega</td>
+          <td style="width:5%">Data Afastamento</td> 
+          <td style="width:10%">Motivo</td>
+          <td style="width:10%">Período</td>
+          <td style="width:10%">Observação</td>
+          <td style="width:10%">Turno</td>
+          <td style="width:10%">Ações</td>
+        </tr>    
+        
+        <% results.forEach(function(Cadastro){ %>
+          <tr> 
+            <td> <%= Cadastro.matricula%></td>
+            <td ><%= Cadastro.nome%></td>
+            <td > <%= Cadastro.turma%></td>
+            <td ><%= Cadastro.data_entrega%></td>
+            <td ><%= Cadastro.data_afastamento%></td>        
+            <td ><%= Cadastro.motivo %></td>         
+            <td ><%= Cadastro.periodo%> dias</td>        
+            <td ><%= Cadastro.observacao%></td>     
+            <td ><%= Cadastro.turno%></td>      
+            <td >
+              <a href="/edit/<%=Cadastro.matricula %>" class='a-editar'>Editar </a>
+              <a href="/delete/<%=Cadastro.matricula%>" class='a-deletar' onclick= "return confirm('Tem certeza?');">Excluir</a>
+            </td>            
+          </tr>
+        <% }) %>    
+      <% } %>
+
+     </thead>
+      <tbody>
+     </tbody>
+     </table>
+      <a href="/new" class="a-novo">Cadastrar Novo</a>
+  </div>
+  </fieldset>
+ </body>
+</html> 
+

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cadastro de alunos</title>
+<link rel='stylesheet' href='/stylesheets/news.css' />
+<meta charset="utf-8" />
+</head>
+<body>
+    <div class='container'>
+        <fieldset>
+            <legend><h1><%= title %></h1></legend>
+            <p>Preencha os dados abaixo para salvar o aluno.</p>
+            <form action="<%= action %>" method="POST">
+                <p class="p1">
+                    <label>Matrícula: <input type="number" name="matricula" value="<%= result.matricula %>" class='i1'/></label>
+                </p>
+                <p class="p2">
+                  <label>Nome: <input type="text" name="nome" value="<%= result.nome %>" /></label>
+                </p>
+                    <label>Turma: 
+                        <select  id="turma" name="turma">
+                            <% let s = "selected" %>
+
+                            <option <% if (result.turma === '1AMM') { %>selected<% } %>>1AMM</option>
+                            <option <% if (result.turma === '1BMM') { %>selected<% } %>>1BMM</option>
+                            <option <% if (result.turma === '1ADS') { %>selected<% } %>>1ADS</option>
+                            <option <% if (result.turma === '1BDS') { %>selected<% } %>>1BDS</option>
+                            <option <% if (result.turma === '2AMM') { %>selected<% } %>>2AMM</option>
+                            <option <% if (result.turma === '2MM') { %>selected<% } %>>2BMM</option>
+                            <option <% if (result.turma === '2ADS') { %>selected<% } %>>2ADS</option>
+                            <option <% if (result.turma === '2BDS') { %>selected<% } %>>2BDS</option>
+                            <option <% if (result.turma === '3AMM') { %>selected<% } %>>3AMM</option>
+                            <option <% if (result.turma === '3BMM') { %>selected<% } %>>3BMM</option>
+                            <option <% if (result.turma === '3ADS') { %>selected<% } %>>3ADS</option>
+                            <option <% if (result.turma === '3BDS') { %>selected<% } %>>3BDS</option>
+                        </select>
+                    </label>
+                </p>       
+                <p>
+                    <label>Motivo:
+                        <select  id="motivo" name="motivo">
+                            <% s = "selected" %>
+                            <option  <% if (result.motivo === 'Atestado Médico') { %>selected<% } %>>Atestado Médico</option>
+                            <option  <% if (result.motivo === 'Declaração de Comparecimento à consulta médica') { %>selected<% } %> >Declaração de Comparecimento à consulta médica</option>            
+                            <option <% if (result.motivo === 'Declaração dos pais ou responsável') { %>selected<% } %>>Declaração dos pais ou responsável</option>
+                            <option <% if (result.motivo === 'Estudante atleta') { %>selected<% } %>>Estudante atleta</option>
+                            <option <% if (result.motivo === 'Estudante gestante') { %>selected<% } %>>Estudante gestante</option>
+                            <option <% if (result.motivo === 'Declaração de Comparecimento à consulta médica') { %>selected<% } %>>Estudante trabalhador</option>
+                            <option <% if (result.motivo === 'Estudante trabalhador') { %>selected<% } %>>Falta de transporte</option>
+                            <option  <% if (result.motivo === 'Outros/Casos omissos') { %>selected<% } %>>Outros/Casos omissos</option>                                                                        
+                        </select>
+                    </label>
+                </p>
+                <p id="paragrafo-observacao">
+                    <label>Observação: <input type="text" name="observacao"  value="<%= result.observacao %>"/></label>
+                </p>
+                <p id="paragrafo_data_entrega">
+                    <label>Data entrega: <input type="date" name="data_entrega" value="<%= result.data_entrega %>"/></label>
+                </p>
+                <p id="paragrafo_data_afastamento">
+                    <label>Data afastamento: <input type="date" id="da" name="data_afastamento" value="<%= result.data_afastamento %>"/></label>
+                </p>
+                <p>
+                    <label>Turno:
+                        <select name="turno" id="turno">
+                            <option >Manhã</option>
+                            <option>Tarde</option>
+                        </select>
+                    </label>
+                </p>  
+                <p>
+                    <label>Período:
+                            <input type="number" name="periodo" value="<%= result.periodo %>"> Dias
+                    </label>
+                </p>  
+                <p>
+                    <a href="/" class='a-cancelar'>Cancelar</a> 
+                    <input type="submit" value="Salvar" />
+                </p>        
+            </form>
+        </fieldset>
+    </div>
+
+    <script>
+        let motivo = document.getElementById('motivo');
+        let paragrafoObservacao = document.getElementById('paragrafo-observacao');
+        let dataEntrega = document.querySelector('input[name="data_entrega"]');
+        let dataAfatamento = document.querySelector('input[name="data_afastamento"]');
+        let periodo = document.querySelector('input[name="periodo"]');
+
+        dataEntrega.onchange = () => {
+            if (dataAfatamento.value !== '' && dataEntrega.value.slice(8) < dataAfatamento.value.slice(8)){
+                periodo.value = dataAfatamento.value.slice(8) - dataEntrega.value.slice(8);
+            }
+        }
+
+         dataAfatamento.onchange = () => {
+            if (dataEntrega.value !== '' && dataEntrega.value.slice(8) < dataAfatamento.value.slice(8) ){
+                periodo.value = dataAfatamento.value.slice(8) - dataEntrega.value.slice(8);
+            }
+        }
+
+        motivo.onchange = () => {
+            if(motivo.value === 'Outros/Casos omissos'){
+                paragrafoObservacao.style.visibility = 'initial';
+                paragrafoObservacao.style.position = 'relative';
+            } else if (motivo.value === 'Atestado Médico') {
+
+            } else {
+                paragrafoObservacao.style.visibility = 'hidden';
+                paragrafoObservacao.style.position = 'absolute';
+            }
+        }
+    </script>
+</body>
+</html>
+           

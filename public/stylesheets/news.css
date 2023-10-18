@@ -1,0 +1,96 @@
+* {
+    paddgin: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+  
+a {
+    color: #00B7FF;
+}
+
+#paragrafo-observacao {
+    position: absolute;
+    visibility: hidden;
+}
+
+html {
+  background: #eee;
+}
+
+.container {
+  height: auto;
+  margin: 0 auto;
+  width: 550px;
+}
+
+form {
+  padding: 10px;
+}
+
+
+p {
+  margin-bottom: 12px;
+}
+
+input:not([type="submit"]) {
+  width: 170px;
+  height: 32px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid #1717174f;
+  text-align: center;
+}
+
+select {
+  height: 32px;
+  background: white;
+  border-radius: 5px;
+  outline: none;
+}
+
+.a-cancelar {
+    background: #f4343d;
+    padding: 10px;
+    border-radius: 5px;
+    color: #eee;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+    margin: 25px auto;
+    width: 120px;
+    text-align: center;
+    transition: .2s;
+}
+
+input[type='submit'] {
+  background: #31b026;
+  padding: 10px;
+  border-radius: 5px;
+  color: #eee;
+  font-weight: bold;
+  text-decoration: none;
+  display: block;
+  margin: 10px auto;
+  transition: .2s;
+  width: 120px;
+  text-align: center;
+  border: none;  
+}
+
+
+.a-cancelar:hover {
+  background: #eee;
+  color: #f4343d;
+  border: 1px solid #f4343d;
+}
+
+input[type='submit']:hover {
+  background: #eee;
+  color: #31b026;
+  border: 1px solid #31b026;
+}
