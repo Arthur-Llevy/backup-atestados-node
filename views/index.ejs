@@ -6,59 +6,169 @@
   <meta charset="utf-8" />
 </head>
 <body>
-
-<fieldset>
+  <h1>Seja bem vindo professor(a) <%= nome%></h1>
+  <fieldset>
   <legend><h1>Listagem de Atestados</h1></legend>
-<div class="container">
-    
-    <table>
-    <thead>
-
-      <% if(results.length === 0) { %>
-        <tr>
-          <td colspan="4">Nenhum cliente cadastrado.</td>
-        </tr>
-      <% } else { %>  
-        <p>Alunos já cadastrados no sistema.</p>
-        <tr class="dados">
-          <td style="width:5%">Matrícula</td>
-          <td style="width:10%">Nome</td>
-          <td style="width:5%">Turma</td>
-          <td style="width:5%">Data entrega</td>
-          <td style="width:5%">Data Afastamento</td> 
-          <td style="width:10%">Motivo</td>
-          <td style="width:10%">Período</td>
-          <td style="width:10%">Observação</td>
-          <td style="width:10%">Turno</td>
-          <td style="width:10%">Ações</td>
-        </tr>    
-        
-        <% results.forEach(function(Cadastro){ %>
-          <tr> 
-            <td> <%= Cadastro.matricula%></td>
-            <td ><%= Cadastro.nome%></td>
-            <td > <%= Cadastro.turma%></td>
-            <td ><%= Cadastro.data_entrega%></td>
-            <td ><%= Cadastro.data_afastamento%></td>        
-            <td ><%= Cadastro.motivo %></td>         
-            <td ><%= Cadastro.periodo%> dias</td>        
-            <td ><%= Cadastro.observacao%></td>     
-            <td ><%= Cadastro.turno%></td>      
-            <td >
-              <a href="/edit/<%=Cadastro.matricula %>" class='a-editar'>Editar </a>
-              <a href="/delete/<%=Cadastro.matricula%>" class='a-deletar' onclick= "return confirm('Tem certeza?');">Excluir</a>
-            </td>            
+  <div class="container">
+      <table>
+      <thead>
+        <% if(results.length === 0) { %>
+          <tr>
+            <td colspan="4">Nenhum cliente cadastrado.</td>
           </tr>
-        <% }) %>    
-      <% } %>
+        <% } else { %>  
+          <p>Alunos já cadastrados no sistema.</p>
+          <form name="buscaAvancada" method="get" action="/atestados">
+            <p>Filtros</p>
+            <label>Turma</label>
+            <select id="selectBuscaAvancada" name="turma">
+              <option>Todas</option>
+              <option>1AMM</option>
+              <option>1BMM</option>
+              <option>1ADS</option>
+              <option>1BDS</option>
+              <option>2AMM</option>
+              <option>2BMM</option>
+              <option>2ADS</option>
+              <option>2BDS</option>
+              <option>3AMM</option>
+              <option>3BMM</option>
+              <option>3ADS</option>
+              <option>3BDS</option>
+            </select>
+          </form> 
+          <tr class="dados">
+            <td style="width:5%">Matrícula</td>
+            <td style="width:10%">Nome</td>
+            <td style="width:5%">Turma</td>
+            <td style="width:5%">Data entrega</td>
+            <td style="width:5%">Data Afastamento</td> 
+            <td style="width:10%">Motivo</td>
+            <td style="width:10%">Período</td>
+            <td style="width:10%">Observação</td>
+            <td style="width:10%">Turno</td>
+            <td style="width:10%">Ações</td>
+          </tr>    
+          
+          <% results.forEach(function(Cadastro){ %>
+            <tr class="<%= Cadastro.turma%>"> 
+              <td> <%= Cadastro.matricula%></td>
+              <td ><%= Cadastro.nome%></td>
+              <td > <%= Cadastro.turma%></td>
+              <td ><%= Cadastro.data_entrega%></td>
+              <td ><%= Cadastro.data_afastamento%></td>        
+              <td ><%= Cadastro.motivo %></td>         
+              <td ><%= Cadastro.periodo%> dias</td>        
+              <td ><%= Cadastro.observacao%></td>     
+              <td ><%= Cadastro.turno%></td>      
+              <td >
+                <a href="/edit/<%=Cadastro.matricula %>" class='a-editar'>Editar </a>
+                <a href="/delete/<%=Cadastro.matricula%>" class='a-deletar' onclick= "return confirm('Tem certeza?');">Excluir</a>
+              </td>            
+            </tr>
+          <% }) %>    
+        <% } %>
 
-     </thead>
-      <tbody>
-     </tbody>
-     </table>
-      <a href="/new" class="a-novo">Cadastrar Novo</a>
-  </div>
+       </thead>
+        <tbody>
+       </tbody>
+       </table>
+        <a href="/new" class="a-novo">Cadastrar Novo</a>
+    </div>  
+    <div class="mobile-container">
+       <select id="selectBuscaAvancada-mobile" name="turma">
+        <option>Todas</option>
+        <option>1AMM</option>
+        <option>1BMM</option>
+        <option>1ADS</option>
+        <option>1BDS</option>
+        <option>2AMM</option>
+        <option>2BMM</option>
+        <option>2ADS</option>
+        <option>2BDS</option>
+        <option>3AMM</option>
+        <option>3BMM</option>
+        <option>3ADS</option>
+        <option>3BDS</option>
+      </select>
+      <% results.forEach((atestado, index) => { %>
+        <div id="<%= atestado.turma %>" class="atestado">
+          <p><strong>Nome:</strong> <%= atestado.nome %></p>
+          <button id="button-<%= index %>" onclick="showDetails(<%= index %>)">+</button>
+        </div>
+        <div class="dados-atestados dados-atestados-<%= index %>">
+          <p><strong>Turma:</strong> <%= atestado.turma %></p>
+          <p><strong>Matrícula:</strong> <%= atestado.matricula %></p>
+          <p><strong>Data entrega:</strong> <%= atestado.data_entrega %></p>
+          <p><strong>Data afastamento:</strong> <%= atestado.data_afastamento %></p>
+          <p><strong>Motivo:</strong> <%= atestado.motivo %></p>
+          <p><strong>Período:</strong> <%= atestado.periodo %></p>
+          <p><strong>Observação:</strong> <%= atestado.observacao %></p>
+          <p><strong>Turno:</strong> <%= atestado.turno %></p>
+        </div>
+      <% }) %>
+    </div>
   </fieldset>
+  <script>
+    let select = document.getElementById('selectBuscaAvancada');
+    select.onchange = () => {
+      let allTrs = document.querySelectorAll('tr');
+      allTrs.forEach(tr => {
+        if(tr.getAttribute('class') !== 'dados' && tr.getAttribute('class') === select.value){
+          tr.style.position = 'relative';
+          tr.style.opacity = '1';
+        }else if(select.value === 'Todas' && tr.getAttribute('class') !== "dados"){
+          tr.style.position = 'relative';
+          tr.style.opacity = '1';
+        }else if(tr.getAttribute('class') !== "dados") {
+          tr.style.position = 'absolute';
+          tr.style.opacity = '0';
+        }
+      })
+    };
+
+    let selectMobile = document.getElementById('selectBuscaAvancada-mobile');
+    selectMobile.onchange = () => {
+      let allDivs = document.querySelectorAll('.atestado');
+      allDivs.forEach(tr => {
+        if(tr.getAttribute('id') === selectMobile.value){
+          tr.style.position = 'relative';
+          tr.style.opacity = '1';
+          tr.style.visibility = 'initial';
+        }else if(selectMobile.value === 'Todas'){
+          tr.style.position = 'relative';
+          tr.style.opacity = '1';
+          tr.style.visibility = 'initial';
+        }else {
+          tr.style.position = 'absolute';
+          tr.style.opacity = '0';
+          tr.style.visibility = 'hidden';
+        }
+      })
+    };
+
+    let details = false;
+
+    const showDetails = (index) => {
+      if(details){
+        let button = document.getElementById(`button-${index}`);
+        button.innerText = '+';
+        let atestado = document.querySelector(`div.dados-atestados-${index}`);
+        atestado.style.opacity = 0;
+        atestado.style.position = "absolute"; 
+        atestado.style.visibility = "hidden";      
+        details = false;     
+      }else {
+        let atestado = document.querySelector(`div.dados-atestados-${index}`);
+        atestado.style.opacity = 1;
+        atestado.style.position = "relative";      
+        atestado.style.visibility = "initial";      
+        let button = document.getElementById(`button-${index}`);
+        button.innerText = '-';
+        details = true;
+      };
+    };
+  </script>
  </body>
 </html> 
 

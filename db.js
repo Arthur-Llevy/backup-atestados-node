@@ -1,31 +1,3 @@
-// const mysql = require('mysql2');
-
-// async function connect() {
-//     if(global.connect && global.connection.state !== 'disconnected')
-//     return global.connection;
-//     const connection = await mysql.createConnection({
-//         host: 'localhost',
-//         port: 3306,
-//         user: 'root2',
-//         password: '',
-//         database: 'atestado'
-//     });
-//     console.log('conectou no Mysql as meninas top');
-//     global.connection = connection;
-//     return global.connection;
-
-// }
-// connect()
-
-// async function selectCadastro(){
-//     const conn = await connect();
-//     const [rows] = await conn.query('SELECT * FROM Cadastro;');
-//     return rows;
-// }
-
-// module.exports = {selectCadastro}
-
-
 const mysql = require('mysql2/promise');
 async function connect(){
   if(global.connection && global.connection.state != "disconected")
@@ -64,10 +36,10 @@ async function insertCadastro(cadastro){
     return await conn.query(sql, [cadastro.matricula, cadastro.nome, cadastro.turma, cadastro.data_entrega, cadastro.data_afastamento, cadastro.periodo, cadastro.motivo, cadastro.observacao, cadastro.turno]);
 };
 
-async function updateCadastro(matricula, cadastro){
+async function updateCadastro(matricula, novaMatricula, cadastro){
     const conn = await connect();
-    const sql = 'UPDATE cadastro SET matricula = ?, nome = ?, turma = ?, data_entrega = ?, data_afastamento = ?, periodo = ?, motivo = ?, observacao = ?, turno = ? WHERE matricula = ?';
-    return await conn.query(sql, [matricula, cadastro.nome, cadastro.turma, cadastro.data_entrega, cadastro.data_afastamento, cadastro.periodo, cadastro.motivo, cadastro.observacao, cadastro.turno, matricula]);
+    const sql = `UPDATE cadastro SET matricula = ${novaMatricula}, nome = ?, turma = ?, data_entrega = ?, data_afastamento = ?, periodo = ?, motivo = ?, observacao = ?, turno = ? WHERE matricula = ?`;    
+    return await conn.query(sql, [cadastro.nome, cadastro.turma, cadastro.data_entrega, cadastro.data_afastamento, cadastro.periodo, cadastro.motivo, cadastro.observacao, cadastro.turno, matricula]);
 };
 
 async function deleteCadastro(matricula){
@@ -75,5 +47,15 @@ async function deleteCadastro(matricula){
     return await conn.query('DELETE FROM cadastro WHERE matricula = ?', [matricula]);
   };
   
+async function teacherLogin(usuario, senha) {
+    const conn = await connect();
+    const [rows] =  await conn.query('SELECT * from login_professores WHERE usuario = ? and senha = ?', [usuario, senha]);
+    return rows;
+};
 
-module.exports = { selectCadastro,  insertCadastro, updateCadastro, selectCadastros, deleteCadastro}
+async function newLogin(nome, usuario, senha) {
+    const conn = await connect();
+    const [rows] =  await conn.query('INSERT INTO login_professores(nome, usuario, senha) values(?,?,?)', [nome, usuario, senha]);    
+};
+
+module.exports = { selectCadastro,  insertCadastro, updateCadastro, selectCadastros, deleteCadastro, teacherLogin, newLogin}

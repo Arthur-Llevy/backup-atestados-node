@@ -20,7 +20,6 @@
                     <label>Turma: 
                         <select  id="turma" name="turma">
                             <% let s = "selected" %>
-
                             <option <% if (result.turma === '1AMM') { %>selected<% } %>>1AMM</option>
                             <option <% if (result.turma === '1BMM') { %>selected<% } %>>1BMM</option>
                             <option <% if (result.turma === '1ADS') { %>selected<% } %>>1ADS</option>
@@ -104,13 +103,22 @@
             if(motivo.value === 'Outros/Casos omissos'){
                 paragrafoObservacao.style.visibility = 'initial';
                 paragrafoObservacao.style.position = 'relative';
-            } else if (motivo.value === 'Atestado Médico') {
-
             } else {
                 paragrafoObservacao.style.visibility = 'hidden';
                 paragrafoObservacao.style.position = 'absolute';
             }
         }
+
+        window.onload = () => {
+            if(motivo.value === 'Outros/Casos omissos'){
+                paragrafoObservacao.style.visibility = 'initial';
+                paragrafoObservacao.style.position = 'relative';
+            } else {
+                paragrafoObservacao.style.visibility = 'hidden';
+                paragrafoObservacao.style.position = 'absolute';
+            };
+        };
+
     </script>
 </body>
 </html>

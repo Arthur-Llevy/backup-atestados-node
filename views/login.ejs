@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Atestados - WEB | Login</title>
+  <link rel='stylesheet' href='/stylesheets/login.css' />
+  <meta charset="utf-8" />
+</head>
+<body>	
+	<% if (type === 'new') { %>
+		<div class='container'>	
+			<fieldset>
+				<legend><h3>Novo cadastro</h3></legend>
+				<form method='POST' action="<%= action %>">
+					<div class="nome">
+						<label for="nome">Nome:</label>
+						<input name="nome" id="nome" />
+					</div>
+					<div class="usuario">
+						<label for="usuario">Usuário:</label>
+						<input name="usuario" id="usuario" />
+					</div>
+					<div class="senha">
+						<label for="senha">Senha:</label>
+						<input name="senha" id="senha" />
+					</div>
+					<button type="submit">Cadastrar</button>
+				</form>
+			</fieldset>
+		</div>	
+	<% } else { %>
+		<div class='container'>	
+			<fieldset>
+				<legend><h3>Login</h3></legend>
+				<form method='POST' action="<%= action%>">
+					<div class="usuario">
+						<label for="usuario">Usuário:</label>
+						<input name="usuario" id="usuario" />
+					</div>
+					<div class="senha">
+						<label for="senha">Senha:</label>
+						<input name="senha" id="senha" />
+					</div>
+					<button type="submit">Entrar</button>
+				</form>
+				<p>Não possui um cadasto? Cadastre-se clicando <a href="/login/new">aqui.</a></p>
+			</fieldset>
+		</div>	
+	<% }; %>
+</body>
+</html> 
+
